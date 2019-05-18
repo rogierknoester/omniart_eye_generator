@@ -32,7 +32,7 @@ def __make_label(class_name: str, eye_count=1) -> torch.Tensor:
     return onehot_labels.to(device)
 
 
-def __get_noise(eye_count=1) -> torch.Tensor:
+def generate_noise(eye_count=1) -> torch.Tensor:
     return torch.randn(eye_count, latent_space_size, 1, 1).to(device)
 
 
@@ -42,16 +42,17 @@ def __to_image(eyes_tensors) -> List[Image]:
     eyes = eyes.transpose((0, 2, 3, 1))
 
     eyes = np.clip(((eyes + 1) / 2.0) * 256, 0, 255)
-    img = []
-    for i, out in enumerate(eyes):
-        out_array = np.asarray(np.uint8(out), dtype=np.uint8)
-        img.append(PIL.Image.fromarray(out_array))
+    eye_images = []
+    for eye in eyes:
+        eye_as_array = np.asarray(np.uint8(eye), dtype=np.uint8)
+        eye_images.append(PIL.Image.fromarray(eye_as_array))
 
-    return img
+    return eye_images
 
 
-def generate_eye(class_name: str, eye_count=1) -> Union[List[Image], Image]:
-    noise = __get_noise(eye_count)
+def generate_eye(class_name: str, eye_count=1, noise=None) -> Union[List[Image], Image]:
+    if noise is None:
+        noise = generate_noise(eye_count)
     labels = __make_label(class_name, eye_count)
 
     eyes_tensors = generator(noise, labels).detach().cpu()
