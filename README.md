@@ -1,5 +1,5 @@
 # OmniArt Eye Generator
-This package is a painted eye generator. It is a cDCGAN trained on the [OmniArt Eye Dataset](https://github.com/rogierkn/omniart_eye_dataset) and conditioned on the eye colour of the training eyes. 
+This package is a painted eye generator. It is a cDCGAN trained on the [OmniArt Eye Dataset](https://github.com/rogierknoester/omniart_eye_dataset) and conditioned on the eye colour of the training eyes. 
 
 ![Eye sample](images/sample.png)
 
