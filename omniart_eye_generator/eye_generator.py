@@ -11,7 +11,7 @@ from omniart_eye_generator.generator import Generator, latent_space_size
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 generator = Generator()
-state_path = os.path.join(os.path.dirname(__file__), 'generator_model_state.pth')
+state_path = os.path.join(os.path.dirname(__file__), 'generator_model_state_e150_d25x25.pth')
 generator.load_state_dict(torch.load(state_path))
 
 generator.eval()
