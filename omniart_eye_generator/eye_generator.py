@@ -12,7 +12,10 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 generator = Generator()
 state_path = os.path.join(os.path.dirname(__file__), 'generator_model_state_e150_d25x25.pth')
-generator.load_state_dict(torch.load(state_path))
+if device == 'cpu':
+    generator.load_state_dict(torch.load(state_path, map_location='cpu'))
+else:
+    generator.load_state_dict(torch.load(state_path))
 
 generator.eval()
 generator.to(device)
